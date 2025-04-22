@@ -1,9 +1,27 @@
+from typing import Callable
 
-class SensorManager:
+callbackOnReady: Callable[[], None] = lambda: None
+"""
+    Method reference to call if the measuring task was finished
+"""
 
-    def __init__(self):
-        pass
+data: dict[str,str] = {}
+"""
+    Structure consisting of sensor data values.
+    Filled when perform_measuring is called
+"""
 
-    @staticmethod
-    def getinstance(cls):
-        pass
+
+
+def initialize() -> None:
+    """
+        Helping
+    """
+    pass
+
+def perform_measuring() -> None:
+    """
+
+    :return:
+    """
+    callbackOnReady()

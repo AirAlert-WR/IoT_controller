@@ -1,0 +1,25 @@
+@startuml
+
+hide empty methods
+hide empty fields
+
+class SensorManager {
+    + Callable callbackMeasuringFinished
+
+    - SensorManager()
+    + SensorManager getInstance()
+
+    + performMeasurement()
+}
+
+class MQTTManager {
+
+    + Callable[ onMessageReceived
+
+    - MQTTManager(String jsonConf)
+    + MQTTManager getInstance(String jsonConf)
+
+    + sendMessage
+}
+
+@enduml
