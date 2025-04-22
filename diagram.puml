@@ -14,9 +14,7 @@ class SensorManager {
 
 class MQTTManager {
 
-    + Callable[ onMessageReceived
-
-    - MQTTManager(String jsonConf)
+    - MQTTManager()
     + MQTTManager getInstance(String jsonConf)
 
     + sendMessage

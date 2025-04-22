@@ -2,11 +2,12 @@ from configparser import ConfigParser
 
 def load_config(filename: str, section: str = "default") -> dict[str, str]:
     """
-        Method to load the configuration file for the mqtt logic
-        :param filename: The name of the file to load
-        :param section: The section inside the file to load
+    Method to load the configuration file for the mqtt logic
 
-        :returns: A not-empty object containing key-value-pairs
+    :param filename: The name of the file to load
+    :param section: The section inside the file to load
+
+    :returns: A non-empty object containing key-value-pairs
     """
     # Reading and parsing the file
     parser = ConfigParser()
@@ -23,5 +24,5 @@ def load_config(filename: str, section: str = "default") -> dict[str, str]:
 
 DEF_CONF_FILE = "config.ini"
 """
-    Constant path to the central configuration file
+Constant path to the central configuration file
 """
