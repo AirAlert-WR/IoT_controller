@@ -1,11 +1,15 @@
+import json
 import platform
 import enum
 from typing import Callable
+
+from src.mqtt import MQTTManager, MQTTTaskClass
 
 SENSOR_DEBUGGING = False
 """
 A debug mode flag for setting random instead of sensor value
 """
+
 # Checking for supported device
 _IS_PI = (platform.machine().startswith("arm") and "raspberrypi" in platform.uname().node.lower())
 # Attempting to import
@@ -33,15 +37,19 @@ class SensorKey(enum.StrEnum):
     SENSOR_SDS011_PM2_5 = "sds011_PM2_5"
     SENSOR_SDS011_PM10 = "sds011_PM10"
 
-class SensorManager:
+class SensorManager(MQTTTaskClass):
     """
     Class for providing functionality to fetch sensor measuring data
     """
 
     def __init__(self):
-        pass
+        """
+        Custom constructor for the text-to-speech class
+        """
+        # Call constructor of mother class
+        super().__init__()
 
-        # Creating the internal sensors
+        # TODO Creating the internal sensors
 
 
         self.callbackOnReady: Callable[[], None] = lambda: None
@@ -55,22 +63,26 @@ class SensorManager:
         Filled when perform_measuring is called
         """
 
-    def perform_measuring(self):
+    def _perform_measuring(self):
         pass
 
+    '''
+    Methods to override
+    '''
+    def get_topic(self) -> str:
+        return "sensor"
 
+    def process(self, data_json: str = "") -> None:
+        ## Attention: Data not important!!!
 
+        # Perform measuring routine
+        self._perform_measuring()
 
-
-def initialize() -> None:
-    """
-        Helping
-    """
-    pass
-
-def perform_measuring() -> None:
-    """
-
-    :return:
-    """
-    callbackOnReady()
+        # Collecting and converting the data to json
+        data_json = json.dumps(self.data)
+        # Calling the publish Method of the associated mqtt manager
+        if self.mqtt_manager is not None:
+            self.mqtt_manager.submit(
+                topic       = self.get_topic(),
+                data_json   = data_json
+            )

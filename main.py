@@ -1,8 +1,8 @@
-from src.mqtt import MQTTManager
 from src.utils.config import load_config, DEF_CONF_FILE
-from src.utils.mqttuser import MQTTTaskClass
+from src.mqtt import MQTTManager, MQTTTaskClass
 
-from src.audio import TextToSpeechManager
+from src.audio import TextToSpeech
+from src.sensors import SensorManager
 
 if __name__ == "__main__":
     """
@@ -11,7 +11,8 @@ if __name__ == "__main__":
 
     # Register application parts
     tasks: list[MQTTTaskClass] = [
-        TextToSpeechManager()
+        SensorManager(),
+        TextToSpeech()
     ]
 
     # Load the mqtt manager (config + instance)
@@ -19,4 +20,7 @@ if __name__ == "__main__":
         filename = DEF_CONF_FILE,
         section = "mqtt"
     )
-    mqtt_manager = MQTTManager(mqtt_config)
+    mqtt_manager = MQTTManager(mqtt_config,tasks)
+
+    mqtt_manager.connect()
+

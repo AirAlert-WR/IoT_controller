@@ -1,10 +1,9 @@
 import enum
 import ssl
-from typing import Callable
 
 import paho.mqtt.client as mqtt
 
-class MQTTConfigKeys(enum.StrEnum):
+class _MQTTConfigKeys(enum.StrEnum):
     """
     Enum with keys for reading the configuration
     """
@@ -16,22 +15,39 @@ class MQTTConfigKeys(enum.StrEnum):
     CERT_MAIN = "certificate"
     CERT_KEY_PRIVATE = "private_key"
 
+class MQTTTaskClass:
+
+    def get_topic(self) -> str:
+        """
+        :return: a constant topic string for the associated task
+        """
+        return ""
+
+    def __init__(self):
+        self.mqtt_manager: MQTTManager | None = None
+        """
+        Instance of the associated mqtt manager
+        """
+
+    def process(self, data_json: str = "") -> None:
+        """
+        Method for processing the integrated task
+        :param data_json: the json-encoded data to use for the task
+        """
+        pass
+
+
 class MQTTManager:
     """
     Class for providing mqtt functionality
     """
 
-    CallbackOnMessage = Callable[[str, str], None]
-    """
-    TYPEALIAS: an method for executing on receiving messages
-    """
-
-    def __init__(self, config: dict[str,str], topics: list[str]) -> None:
+    def __init__(self, config: dict[str,str], tasks: list[MQTTTaskClass]) -> None:
         """
         Custom constructor for the class
 
         :param config: key-value dictionary containing configuration settings
-        :param topics: mqtt topics to subscribe for messaging
+        :param tasks: tasks to add for messaging (topics and actions)
         """
         # creating and configuring the mqtt client
         self._client = mqtt.Client(
@@ -40,30 +56,24 @@ class MQTTManager:
             #protocol    = mqtt.MQTTv5
         )
         self._client.tls_set(
-            ca_certs    = config.get(MQTTConfigKeys.CERT_ROOT_CA,""),
-            certfile    = config.get(MQTTConfigKeys.CERT_MAIN,""),
-            keyfile     = config.get(MQTTConfigKeys.CERT_KEY_PRIVATE,""),
+            ca_certs    = config.get(_MQTTConfigKeys.CERT_ROOT_CA,""),
+            certfile    = config.get(_MQTTConfigKeys.CERT_MAIN,""),
+            keyfile     = config.get(_MQTTConfigKeys.CERT_KEY_PRIVATE,""),
             tls_version = ssl.PROTOCOL_TLSv1_2
         )
         self._client.tls_insecure_set(False)
         self._client.username_pw_set(
-            username    = config.get(MQTTConfigKeys.USERNAME,"admin"),
-            password    = config.get(MQTTConfigKeys.PASSWORD,"")
+            username    = config.get(_MQTTConfigKeys.USERNAME,"admin"),
+            password    = config.get(_MQTTConfigKeys.PASSWORD,"")
         )
 
         # Saving some data to protected attributes
-        self._topics = topics
-        self._connect_host = config.get(MQTTConfigKeys.HOST, "")
-        self._connect_port = int(p) if (p := config.get(MQTTConfigKeys.PORT, "0")).isdigit() else 3181
+        self._task_dictionary = {task.get_topic(): task for task in tasks}
+        self._connect_host = config.get(_MQTTConfigKeys.HOST, "")
+        self._connect_port = int(p) if (p := config.get(_MQTTConfigKeys.PORT, "0")).isdigit() else 3181
 
         # Setting internal methods for mqtt client
         self._set_methods_for_internal_client()
-
-        # setting and documenting public attributes
-        self.on_message: MQTTManager.CallbackOnMessage = lambda topic,data_json: None
-        """
-        Event handler for external processing of received messages
-        """
 
 
     def _set_methods_for_internal_client(self) -> None:
@@ -79,11 +89,12 @@ class MQTTManager:
                 # print success
                 print("HINT (MQTTManager): Connection established")
 
-                # Subscribe to all topics
-                for topic in self._topics:
+                # Subscribe to all topics and add manager parameter as parent
+                for task in self._task_dictionary.values():
                     client.subscribe(
-                        topic   = topic
+                        topic   = task.get_topic()
                     )
+                    task.mqtt_manager = self
 
             else:
                 # else print error
@@ -119,20 +130,19 @@ class MQTTManager:
             called on receiving a message for a subscribed topic
             """
             try:
-                # Fetching topic and raw payload
+                # Fetching topic and raw payload from message
                 topic = message.topic
                 payload_raw = message.payload.decode("utf-8")
-
+                # Logging
                 print(f"HINT (MQTTManager): Message received for topic {topic}")
 
-                # Calling the main event method "on_message"
-                self.on_message(
-                    topic       = topic,
-                    data_json   = payload_raw
-                )
+                # Execute task associated to topic
+                self._task_dictionary[topic].process(payload_raw)
+
             except Exception as e:
                 # Log on exception
                 print(f"ERROR (MQTTManager): Message gathering problem \n{e}")
+
 
         # setting internal event listeners
         self._client.on_connect     = event_on_connect
@@ -170,7 +180,7 @@ class MQTTManager:
         :param data_json: json-converted data to submit
         """
         # Checking for topic validity
-        if topic not in self._topics:
+        if topic not in self._task_dictionary.keys():
             print(f"ERROR (MQTTManager): Topic {topic} not registered")
             return
 
