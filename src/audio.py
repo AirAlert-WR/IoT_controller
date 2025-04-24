@@ -1,8 +1,18 @@
 import pyttsx3
+from src.utils.mqttuser import MQTTTaskClass
 
-#TODO optionally migrate to gTTS
+#TODO optionally migrate to aws Polly
 
-class TextToSpeechManager:
+class TextToSpeechManager(MQTTTaskClass):
+    """
+    Class for providing text-to-speech functionality
+    """
+
+    '''
+    Methods to override
+    '''
+    def get_topic(self) -> str:
+        return "speech"
 
     def __init__(self) -> None:
         """
@@ -10,13 +20,10 @@ class TextToSpeechManager:
         """
         # creating and configuring the engine
         engine = pyttsx3.init()
-        engine.getProperty("voices")
+        voices = engine.getProperty("voices")
 
         # Setting as attributes
         self._engine = engine
-        """
-        INTERNAL: engine for text-to-audio
-        """
 
 
     def speak(self, text: str = "") -> None:
