@@ -32,9 +32,9 @@ class AbstractMQTTTask(ABC):
         pass
 
     @abstractmethod
-    def process_mqtt_task(self, data_json: str = "") -> None:
+    def process_mqtt_task(self, data: dict) -> None:
         """
         Method for processing the integrated task for the mqtt manager
-        :param data_json: the json-encoded data to use for the task
+        :param data: the data dictionary for custom parsing inside the functionality
         """
         pass

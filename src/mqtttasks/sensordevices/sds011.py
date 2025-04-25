@@ -18,6 +18,9 @@ class SensorSDS011(AbstractSensorDevice):
     """
 
     class SensorSDS011Keys(enum.StrEnum):
+        """
+        Enum with keys for setting the sensor data dictionary
+        """
         pm2_5 = "pm2.5"
         pm10 = "pm10"
 

@@ -1,5 +1,4 @@
 from src.mqtttasks.base import AbstractMQTTTask
-import json
 
 import pyttsx3
 
@@ -37,12 +36,10 @@ class TextToSpeech(AbstractMQTTTask):
     def topic(self) -> str:
         return "speech"
 
-    def process_mqtt_task(self, data_json: str = "") -> None:
-        try:
-            # Convert data
-            data: dict[str,str] = json.loads(data_json)
+    def process_mqtt_task(self, data: dict) -> None:
+        # Fetch the data
+        text = data.get("text","")
+        #language = data.get("lang_short","EN")
 
-            # Run the engine
-            self.speak(data.get("text",""))
-        except json.JSONDecodeError:
-            print(f"ERROR (TextToSpeechManager): Failed to decode json.")
+        # Run the engine using the data
+        self.speak(text)

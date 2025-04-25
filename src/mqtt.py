@@ -1,5 +1,7 @@
 import enum
+import json
 import ssl
+
 import paho.mqtt.client as mqtt
 
 from src.mqtttasks.base import AbstractMQTTTask
@@ -115,9 +117,14 @@ class MQTTManager:
                 # Logging
                 print(f"HINT (MQTTManager): Message received for topic {topic}")
 
-                # Execute task associated to topic
-                self._task_dictionary[topic].process_mqtt_task(payload_raw)
+                # Convert json to dictionary
+                data_dict: dict = json.loads(payload_raw)
 
+                # Execute task associated to topic
+                self._task_dictionary[topic].process_mqtt_task(data_dict)
+            except json.JSONDecodeError:
+                # Log on exception
+                print(f"ERROR (MQTTManager): Failed to decode json.")
             except Exception as e:
                 # Log on exception
                 print(f"ERROR (MQTTManager): Message gathering problem \n{e}")
@@ -151,17 +158,20 @@ class MQTTManager:
         self._client.disconnect()
 
 
-    def submit(self, topic: str, data_json: str = "") -> None:
+    def submit(self, topic: str, data: dict) -> None:
         """
         Method for sending a message to the connected mqtt server
 
         :param topic: topic identifier to submit on
-        :param data_json: json-converted data to submit
+        :param data: data dictionary to submit
         """
         # Checking for topic validity
         if topic not in self._task_dictionary.keys():
             print(f"ERROR (MQTTManager): Topic {topic} not registered")
             return
+
+        # Converting data to json
+        data_json = json.dumps(data)
 
         # Publishing the content
         self._client.publish(

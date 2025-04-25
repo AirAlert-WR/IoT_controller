@@ -39,7 +39,7 @@ class SensorManager(AbstractMQTTTask):
     def topic(self) -> str:
         return "sensor"
 
-    def process_mqtt_task(self, data_json: str = "") -> None:
+    def process_mqtt_task(self, data: dict) -> None:
         ## Attention: Provided data not important!!!
 
         # Perform measuring routine
