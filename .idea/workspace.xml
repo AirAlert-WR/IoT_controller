@@ -4,13 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Implementing mqtt tls support and mqtt task helper class">
+    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Adding code">
+      <change afterPath="$PROJECT_DIR$/.idea/AirAlert_IoT_Controller.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/certs/.placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/mqtttasks/base.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/mqtttasks/sensordevices/base.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/mqtttasks/sensordevices/mq135.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/mqtttasks/sensordevices/sds011.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/test_sensors.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diagram.puml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/audio.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/audio.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqtttasks/texttospeech.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mqtt.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqtt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sensors.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/sensors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/mqttuser.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sensors.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqtttasks/sensors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/config.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +31,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="Python Unit Test" />
       </list>
     </option>
   </component>
@@ -47,17 +58,49 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.Test_Sensors.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
-  <component name="RunManager">
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\danil\PycharmProjects\AirAlert_IoT_Controller\test" />
+      <recent name="C:\Users\danil\PycharmProjects\AirAlert_IoT_Controller\src" />
+      <recent name="C:\Users\danil\PycharmProjects\AirAlert_IoT_Controller\src\mqtttasks" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.Test_Sensors">
+    <configuration name="Test_Sensors" type="PythonConfigurationType" factoryName="Python">
+      <module name="AirAlert_IoT_Controller" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.11 (AirAlert_IoT_Controller)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/test_sensors.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="AirAlert_IoT_Controller" />
       <option name="ENV_FILES" value="" />
@@ -80,6 +123,10 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.Test_Sensors" />
+    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -153,7 +200,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745501937258</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Adding code">
+      <option name="closed" value="true" />
+      <created>1745523951458</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1745523951458</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -172,6 +227,7 @@
     <MESSAGE value="Add IDEA path" />
     <MESSAGE value="Updating project structure&#10;+ adding code" />
     <MESSAGE value="Implementing mqtt tls support and mqtt task helper class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementing mqtt tls support and mqtt task helper class" />
+    <MESSAGE value="Adding code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding code" />
   </component>
 </project>

@@ -1,48 +1,27 @@
 import enum
 import ssl
-
 import paho.mqtt.client as mqtt
 
-class _MQTTConfigKeys(enum.StrEnum):
-    """
-    Enum with keys for reading the configuration
-    """
-    USERNAME = "username"
-    PASSWORD = "password"
-    HOST = "host"
-    PORT = "port"
-    CERT_ROOT_CA = "root_ca"
-    CERT_MAIN = "certificate"
-    CERT_KEY_PRIVATE = "private_key"
-
-class MQTTTaskClass:
-
-    def get_topic(self) -> str:
-        """
-        :return: a constant topic string for the associated task
-        """
-        return ""
-
-    def __init__(self):
-        self.mqtt_manager: MQTTManager | None = None
-        """
-        Instance of the associated mqtt manager
-        """
-
-    def process(self, data_json: str = "") -> None:
-        """
-        Method for processing the integrated task
-        :param data_json: the json-encoded data to use for the task
-        """
-        pass
-
+from src.mqtttasks.base import AbstractMQTTTask
 
 class MQTTManager:
     """
     Class for providing mqtt functionality
     """
 
-    def __init__(self, config: dict[str,str], tasks: list[MQTTTaskClass]) -> None:
+    class MQTTConfigKeys(enum.StrEnum):
+        """
+        Enum with keys for reading the configuration
+        """
+        USERNAME = "username"
+        PASSWORD = "password"
+        HOST = "host"
+        PORT = "port"
+        CERT_ROOT_CA = "root_ca"
+        CERT_MAIN = "certificate"
+        CERT_KEY_PRIVATE = "private_key"
+
+    def __init__(self, config: dict[str,str], tasks: list[AbstractMQTTTask]) -> None:
         """
         Custom constructor for the class
 
@@ -56,21 +35,21 @@ class MQTTManager:
             #protocol    = mqtt.MQTTv5
         )
         self._client.tls_set(
-            ca_certs    = config.get(_MQTTConfigKeys.CERT_ROOT_CA,""),
-            certfile    = config.get(_MQTTConfigKeys.CERT_MAIN,""),
-            keyfile     = config.get(_MQTTConfigKeys.CERT_KEY_PRIVATE,""),
+            ca_certs    = config.get(self.MQTTConfigKeys.CERT_ROOT_CA,""),
+            certfile    = config.get(self.MQTTConfigKeys.CERT_MAIN,""),
+            keyfile     = config.get(self.MQTTConfigKeys.CERT_KEY_PRIVATE,""),
             tls_version = ssl.PROTOCOL_TLSv1_2
         )
         self._client.tls_insecure_set(False)
         self._client.username_pw_set(
-            username    = config.get(_MQTTConfigKeys.USERNAME,"admin"),
-            password    = config.get(_MQTTConfigKeys.PASSWORD,"")
+            username    = config.get(self.MQTTConfigKeys.USERNAME,"admin"),
+            password    = config.get(self.MQTTConfigKeys.PASSWORD,"")
         )
 
         # Saving some data to protected attributes
-        self._task_dictionary = {task.get_topic(): task for task in tasks}
-        self._connect_host = config.get(_MQTTConfigKeys.HOST, "")
-        self._connect_port = int(p) if (p := config.get(_MQTTConfigKeys.PORT, "0")).isdigit() else 3181
+        self._task_dictionary = {task.topic: task for task in tasks}
+        self._connect_host = config.get(self.MQTTConfigKeys.HOST, "")
+        self._connect_port = int(p) if (p := config.get(self.MQTTConfigKeys.PORT, "0")).isdigit() else 3181
 
         # Setting internal methods for mqtt client
         self._set_methods_for_internal_client()
@@ -92,9 +71,9 @@ class MQTTManager:
                 # Subscribe to all topics and add manager parameter as parent
                 for task in self._task_dictionary.values():
                     client.subscribe(
-                        topic   = task.get_topic()
+                        topic   = task.topic
                     )
-                    task.mqtt_manager = self
+                    task.manager = self
 
             else:
                 # else print error
@@ -137,7 +116,7 @@ class MQTTManager:
                 print(f"HINT (MQTTManager): Message received for topic {topic}")
 
                 # Execute task associated to topic
-                self._task_dictionary[topic].process(payload_raw)
+                self._task_dictionary[topic].process_mqtt_task(payload_raw)
 
             except Exception as e:
                 # Log on exception

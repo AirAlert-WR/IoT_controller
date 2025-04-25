@@ -1,10 +1,11 @@
-import pyttsx3
+from src.mqtttasks.base import AbstractMQTTTask
 import json
-from src.mqtt import MQTTTaskClass
+
+import pyttsx3
 
 #TODO optionally migrate to aws Polly
 
-class TextToSpeech(MQTTTaskClass):
+class TextToSpeech(AbstractMQTTTask):
     """
     Class for providing text-to-speech functionality
     """
@@ -19,7 +20,7 @@ class TextToSpeech(MQTTTaskClass):
         # creating and configuring the engine
         self._engine = pyttsx3.init()
 
-    def _speak(self, text: str = "") -> None:
+    def speak(self, text: str = "") -> None:
         """
         Method for outputting a text as audio
 
@@ -30,17 +31,18 @@ class TextToSpeech(MQTTTaskClass):
         #self._engine.runAndWait()
 
     '''
-    Methods to override
+    Methods for MQTTTaskClass
     '''
-    def get_topic(self) -> str:
+    @property
+    def topic(self) -> str:
         return "speech"
 
-    def process(self, data_json: str = "") -> None:
+    def process_mqtt_task(self, data_json: str = "") -> None:
         try:
             # Convert data
             data: dict[str,str] = json.loads(data_json)
 
             # Run the engine
-            self._speak(data.get("text",""))
+            self.speak(data.get("text",""))
         except json.JSONDecodeError:
             print(f"ERROR (TextToSpeechManager): Failed to decode json.")
