@@ -1,5 +1,5 @@
-from src.mqtttasks.base import AbstractMQTTTask
-from src.mqtttasks.sensordevices.base import AbstractSensorDevice
+from src.mqttTasks.base import AbstractMQTTTask
+from src.mqttTasks.sensorDevices.base import AbstractSensorDevice
 import json
 
 class SensorManager(AbstractMQTTTask):

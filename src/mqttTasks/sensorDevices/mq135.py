@@ -1,5 +1,5 @@
 from src.utils import is_raspberrypi
-from src.mqtttasks.sensordevices.base import AbstractSensorDevice
+from src.mqttTasks.sensorDevices.base import AbstractSensorDevice
 
 # Restrict for supported platform
 _platform_supported = is_raspberrypi()

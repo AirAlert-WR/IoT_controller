@@ -1,4 +1,4 @@
-from src.mqtttasks.base import AbstractMQTTTask
+from src.mqttTasks.base import AbstractMQTTTask
 
 import pyttsx3
 

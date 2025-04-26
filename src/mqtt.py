@@ -4,7 +4,7 @@ import ssl
 
 import paho.mqtt.client as mqtt
 
-from src.mqtttasks.base import AbstractMQTTTask
+from src.mqttTasks.base import AbstractMQTTTask
 
 class MQTTManager:
     """

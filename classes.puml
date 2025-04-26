@@ -1,0 +1,111 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+package utils {
+    class ConfigurationReader {
+        + __init__ (filename: str) -> None
+        + for_section (section: str) -> dict[str,str]
+    }
+
+    class utils {
+        + {static} is_raspberry_pi ()
+    }
+}
+
+package mqtt {
+    class MQTTManager {
+        # _task_dictionary: dict[str,AbstractMQTTTask]
+
+        + __init__ (config: dict[str,str], tasks: list[AbstractMQTTTask) -> None
+        # _set_methods_for_internal_client () -> None
+
+        + connect () -> None
+        + disconnect () -> None
+        + submit (topic: str, data: dict) -> None
+    }
+
+    enum MQTTConfigKeys {
+        USERNAME = "username"
+        PASSWORD = "password"
+        HOST = "host"
+        PORT = "port"
+        CERT_ROOT_CA = "root_ca"
+        CERT_MAIN = "certificate"
+        CERT_KEY_PRIVATE = "private_key"
+    }
+    MQTTManager --> MQTTConfigKeys: using as constants
+}
+
+package mqttTasks {
+    abstract class AbstractMQTTTask {
+        + @property[rw] manager: MQTTManager
+        + @property[r] {abstract} topic: str
+
+        + {abstract} process_mqtt_task (data: dict) -> None
+    }
+
+    class TextToSpeech {
+        + @override topic
+
+        + __init__ ()
+        + speak (text: str)
+
+        + @override process_mqtt_task()
+    }
+    AbstractMQTTTask <|-- TextToSpeech
+
+    class SensorManager {
+        # _sensors: list[AbstractSensorDevice]
+        + @property[r] data: dict[str,any]
+
+        + @override topic
+
+        + __init__ ()
+        + perform_measuring ()
+
+        + @override process_mqtt_task()
+    }
+    AbstractMQTTTask <|-- SensorManager
+}
+
+package sensorDevices {
+    abstract class AbstractSensorDevice {
+        # _is_dummy: bool
+
+        + @property[r] {abstract} id
+        + @property[r] data: any
+
+        + {abstract} measure () -> None
+    }
+
+    class SensorMQ135 {
+        @override id
+
+        @override __init__ ()
+        @override measure ()
+    }
+    AbstractSensorDevice <|-- SensorMQ135
+    SensorMQ135 --> utils.utils: using methods
+
+    class SensorSDS011 {
+        @override id
+
+        @override __init__ ()
+        @override measure ()
+    }
+    AbstractSensorDevice <|-- SensorSDS011
+    SensorSDS011 --> utils.utils: using methods
+
+    enum SensorSDS011Keys {
+        pm2_5 = "pm2.5"
+        pm10 = "pm10"
+    }
+    SensorSDS011 --> SensorSDS011Keys: using as constants
+}
+
+class main {
+    + __init__ ()
+}
+
+@enduml
