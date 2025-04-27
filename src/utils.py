@@ -1,36 +1,42 @@
-from configparser import ConfigParser
+from abc import ABC
 
-class ConfigurationReader:
+class AbstractConfigurable(ABC):
     """
-    Class for loading configuration entries from a file
+    ABSTRACT: Class for providing a key-value configuration environment
     """
 
-    def __init__(self, filename: str) -> None:
+    def __init__(self, global_config: dict[str,any]):
         """
-        Custom constructor for initializing
-        :param filename: The path for the file to be loaded
+        Constructor
+        :param global_config: the global configuration to filter
         """
-        # Reading into the internal parser
-        self._parser = ConfigParser()
-        self._parser.read(filename)
+        # Filter the config for the own section and pack it
+        self._config = self.mod_config(global_config.get(self.section(),{}))
 
-
-    def for_section(self, section: str = "") -> dict[str,str]:
+    @classmethod
+    def section(cls) -> str:
         """
-        Method to load the configuration file for the mqtt logic
-
-        :param section: The section inside the config to load
-
-        :returns: A non-empty object containing key-value-pairs
+        :return: the section string for the global key-value configuration
         """
-        # Return empty object if section not found
-        if section not in self._parser:
-            print(f"WARNING: Section '{section}' not found in parser file. Returning empty structure.")
-            return {}
+        pass
 
-        # Return the loaded entries for the section
-        return dict(self._parser[section])
+    @classmethod
+    def mod_config(cls, loaded_config: dict[str,any]) -> dict[str,any]:
+        """
+        Method for replacing values of an input configuration with valid (default) ones
+        :param loaded_config: the input dictionary
+        :return: a configuration dictionary
+        """
+        pass
+
+DEF_CONFIG_FILE = "config.ini"
+"""
+The default path for the program's config file
+"""
 
 import platform
 def is_raspberrypi() -> bool:
+    """
+    :return: state if platform is REALLY an arm-based raspberry pi
+    """
     return platform.machine().startswith("arm") and "raspberrypi" in platform.uname().node.lower()

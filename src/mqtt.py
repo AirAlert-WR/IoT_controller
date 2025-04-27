@@ -1,57 +1,68 @@
-import enum
+from enum import StrEnum
 import json
 import ssl
 
 import paho.mqtt.client as mqtt
 
 from src.mqttTasks.base import AbstractMQTTTask
+from src.utils import AbstractConfigurable
 
-class MQTTManager:
+
+class MQTTManager(AbstractConfigurable):
     """
     Class for providing mqtt functionality
     """
 
-    class MQTTConfigKeys(enum.StrEnum):
+    class _MQTTConfigKeys(StrEnum):
         """
         Enum with keys for reading the configuration
         """
-        USERNAME = "username"
-        PASSWORD = "password"
-        HOST = "host"
-        PORT = "port"
-        CERT_ROOT_CA = "root_ca"
-        CERT_MAIN = "certificate"
-        CERT_KEY_PRIVATE = "private_key"
+        USER_NAME       = "username"
+        USER_PASSWORD   = "password"
+        USER_ID         = "id"
 
-    def __init__(self, config: dict[str,str], tasks: list[AbstractMQTTTask]) -> None:
+        SERVER_HOST     = "host"
+        SERVER_PORT     = "port"
+
+        CERT_ROOT       = "ca_root"
+        CERT_MAIN       = "ca_main"
+        CERT_KEY        = "key_private"
+
+
+    def __init__(self, global_config: dict[str,any], tasks: list[AbstractMQTTTask]) -> None:
         """
         Custom constructor for the class
 
-        :param config: key-value dictionary containing configuration settings
+        :param global_config: the global configuration
         :param tasks: tasks to add for messaging (topics and actions)
         """
+        # Call the super constructor
+        super().__init__(global_config)
+
+        keys = self._MQTTConfigKeys
+
         # creating and configuring the mqtt client
         self._client = mqtt.Client(
-            #client_id   = "",
+            client_id   = self._config[keys.USER_ID],
             #userdata    = None,
             #protocol    = mqtt.MQTTv5
         )
         self._client.tls_set(
-            ca_certs    = config.get(self.MQTTConfigKeys.CERT_ROOT_CA,""),
-            certfile    = config.get(self.MQTTConfigKeys.CERT_MAIN,""),
-            keyfile     = config.get(self.MQTTConfigKeys.CERT_KEY_PRIVATE,""),
+            ca_certs    = self._config[keys.CERT_ROOT],
+            certfile    = self._config[keys.CERT_MAIN],
+            keyfile     = self._config[keys.CERT_KEY],
             tls_version = ssl.PROTOCOL_TLSv1_2
         )
         self._client.tls_insecure_set(False)
         self._client.username_pw_set(
-            username    = config.get(self.MQTTConfigKeys.USERNAME,"admin"),
-            password    = config.get(self.MQTTConfigKeys.PASSWORD,"")
+            username    = self._config[keys.USER_NAME],
+            password    = self._config[keys.USER_PASSWORD]
         )
 
         # Saving some data to protected attributes
         self._task_dictionary = {task.topic: task for task in tasks}
-        self._connect_host = config.get(self.MQTTConfigKeys.HOST, "")
-        self._connect_port = int(p) if (p := config.get(self.MQTTConfigKeys.PORT, "0")).isdigit() else 3181
+        self._connect_host = self._config[keys.SERVER_HOST]
+        self._connect_port = self._config[keys.SERVER_PORT]
 
         # Setting internal methods for mqtt client
         self._set_methods_for_internal_client()
@@ -178,3 +189,25 @@ class MQTTManager:
             topic   = topic,
             payload = data_json
         )
+
+    '''
+    Methods to override
+    '''
+    @classmethod
+    def section(cls) -> str:
+        return "mqtt"
+
+    @classmethod
+    def mod_config(cls, loaded_config: dict[str,any]) -> dict[str,any]:
+
+        keys = cls._MQTTConfigKeys
+        return {
+            keys.USER_NAME      : loaded_config.get(keys.USER_NAME,     ""),
+            keys.USER_PASSWORD  : loaded_config.get(keys.USER_PASSWORD, ""),
+            keys.USER_ID        : loaded_config.get(keys.USER_ID,       ""),
+            keys.CERT_ROOT      : loaded_config.get(keys.CERT_ROOT,     "certs/mqtt.ca"),
+            keys.CERT_MAIN      : loaded_config.get(keys.CERT_MAIN,     "certs/mqtt.crt"),
+            keys.CERT_KEY       : loaded_config.get(keys.CERT_KEY,      "certs/mqtt.key"),
+            keys.SERVER_HOST    : loaded_config.get(keys.SERVER_HOST,   "127.0.0.1"),
+            keys.SERVER_PORT    : int(p) if (p := loaded_config.get(keys.SERVER_PORT, "3181")).isdigit() else 3181
+        }

@@ -85,7 +85,7 @@ package mqtt {
     class MQTTManager {
         # _task_dictionary: dict[str,AbstractMQTTTask]
 
-        + __init__ (config: dict[str,str], tasks: list[AbstractMQTTTask) -> None
+        + __init__ (config: dict[str,str], tasks: list[AbstractMQTTTask]) -> None
         # _set_methods_for_internal_client () -> None
 
         + connect () -> None

@@ -1,4 +1,4 @@
-from src.utils import ConfigurationReader
+from src.utils import ConfigurationReader, DEF_CONFIG_FILE
 from src.mqtt import MQTTManager
 
 from src.mqttTasks.base import AbstractMQTTTask
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     ]
 
     # Load the configuration reader
-    config = ConfigurationReader("config.ini")
+    config = ConfigurationReader(DEF_CONFIG_FILE)
 
     # Load the mqtt manager
     manager = MQTTManager(
