@@ -13,28 +13,39 @@ package utils {
     }
 }
 
-package mqtt {
-    class MQTTManager {
-        # _task_dictionary: dict[str,AbstractMQTTTask]
+package sensorDevices {
+    abstract class AbstractSensorDevice {
+        # _is_dummy: bool
 
-        + __init__ (config: dict[str,str], tasks: list[AbstractMQTTTask) -> None
-        # _set_methods_for_internal_client () -> None
+        + @property[r] {abstract} id
+        + @property[r] data: any
 
-        + connect () -> None
-        + disconnect () -> None
-        + submit (topic: str, data: dict) -> None
+        + {abstract} measure () -> None
     }
 
-    enum MQTTConfigKeys {
-        USERNAME = "username"
-        PASSWORD = "password"
-        HOST = "host"
-        PORT = "port"
-        CERT_ROOT_CA = "root_ca"
-        CERT_MAIN = "certificate"
-        CERT_KEY_PRIVATE = "private_key"
+    class SensorMQ135 {
+        @override id
+
+        @override __init__ ()
+        @override measure ()
     }
-    MQTTManager --> MQTTConfigKeys: using as constants
+    AbstractSensorDevice <|-- SensorMQ135
+    SensorMQ135 - utils.utils: using methods >
+
+    class SensorSDS011 {
+        @override id
+
+        @override __init__ ()
+        @override measure ()
+    }
+    AbstractSensorDevice <|-- SensorSDS011
+    SensorSDS011 - utils.utils: using methods >
+
+    enum SensorSDS011Keys {
+        pm2_5 = "pm2.5"
+        pm10 = "pm10"
+    }
+    SensorSDS011 - SensorSDS011Keys: using as constants >
 }
 
 package mqttTasks {
@@ -68,44 +79,38 @@ package mqttTasks {
     }
     AbstractMQTTTask <|-- SensorManager
 }
+mqttTasks.SensorManager "1" *-- "many" sensorDevices.AbstractSensorDevice : has >
 
-package sensorDevices {
-    abstract class AbstractSensorDevice {
-        # _is_dummy: bool
+package mqtt {
+    class MQTTManager {
+        # _task_dictionary: dict[str,AbstractMQTTTask]
 
-        + @property[r] {abstract} id
-        + @property[r] data: any
+        + __init__ (config: dict[str,str], tasks: list[AbstractMQTTTask) -> None
+        # _set_methods_for_internal_client () -> None
 
-        + {abstract} measure () -> None
+        + connect () -> None
+        + disconnect () -> None
+        + submit (topic: str, data: dict) -> None
     }
 
-    class SensorMQ135 {
-        @override id
-
-        @override __init__ ()
-        @override measure ()
+    enum MQTTConfigKeys {
+        USERNAME = "username"
+        PASSWORD = "password"
+        HOST = "host"
+        PORT = "port"
+        CERT_ROOT_CA = "root_ca"
+        CERT_MAIN = "certificate"
+        CERT_KEY_PRIVATE = "private_key"
     }
-    AbstractSensorDevice <|-- SensorMQ135
-    SensorMQ135 --> utils.utils: using methods
-
-    class SensorSDS011 {
-        @override id
-
-        @override __init__ ()
-        @override measure ()
-    }
-    AbstractSensorDevice <|-- SensorSDS011
-    SensorSDS011 --> utils.utils: using methods
-
-    enum SensorSDS011Keys {
-        pm2_5 = "pm2.5"
-        pm10 = "pm10"
-    }
-    SensorSDS011 --> SensorSDS011Keys: using as constants
+    MQTTManager - MQTTConfigKeys: using as constants >
 }
+mqtt.MQTTManager "1" *-- "many" mqttTasks.AbstractMQTTTask : has >
 
-class main {
-    + __init__ ()
+package main {
+
 }
+note left of main: Program entry; Uses all concrete implementations for loading objects.
+main --> "1" utils.ConfigurationReader
+main --> "1" mqtt.MQTTManager
 
 @enduml
