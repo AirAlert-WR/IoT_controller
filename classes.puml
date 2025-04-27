@@ -3,9 +3,10 @@
 
 
 package utils {
-    class ConfigurationReader {
-        + __init__ (filename: str) -> None
-        + for_section (section: str) -> dict[str,str]
+    abstract class AbstractConfigurable {
+        + __init__(self, config: dict[str,any]) -> None
+        + {static} section() -> str
+        + {static} mod_config(cls, loaded_config: dict[str,any]) -> dict[str,any]
     }
 
     class utils {
@@ -91,9 +92,13 @@ package mqtt {
         + connect () -> None
         + disconnect () -> None
         + submit (topic: str, data: dict) -> None
-    }
 
-    enum MQTTConfigKeys {
+        @override section()
+        @override mod_config()
+    }
+    utils.AbstractConfigurable <|-- MQTTManager
+
+    enum _MQTTConfigKeys {
         USERNAME = "username"
         PASSWORD = "password"
         HOST = "host"
@@ -102,7 +107,7 @@ package mqtt {
         CERT_MAIN = "certificate"
         CERT_KEY_PRIVATE = "private_key"
     }
-    MQTTManager - MQTTConfigKeys: using as constants >
+    MQTTManager - _MQTTConfigKeys: using as constants >
 }
 mqtt.MQTTManager "1" *-- "many" mqttTasks.AbstractMQTTTask : has >
 
@@ -110,7 +115,6 @@ package main {
 
 }
 note left of main: Program entry; Uses all concrete implementations for loading objects.
-main --> "1" utils.ConfigurationReader
 main --> "1" mqtt.MQTTManager
 
 @enduml

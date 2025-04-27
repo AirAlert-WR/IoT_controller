@@ -29,15 +29,15 @@ class MQTTManager(AbstractConfigurable):
         CERT_KEY        = "key_private"
 
 
-    def __init__(self, global_config: dict[str,any], tasks: list[AbstractMQTTTask]) -> None:
+    def __init__(self, config: dict[str,any], tasks: list[AbstractMQTTTask]) -> None:
         """
         Custom constructor for the class
 
-        :param global_config: the global configuration
+        :param config: the global configuration
         :param tasks: tasks to add for messaging (topics and actions)
         """
         # Call the super constructor
-        super().__init__(global_config)
+        super().__init__(config)
 
         keys = self._MQTTConfigKeys
 

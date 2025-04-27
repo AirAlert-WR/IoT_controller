@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Finalizing UML">
-      <change afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Added a setup script for easy initial configuration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes.puml" beforeDir="false" afterPath="$PROJECT_DIR$/classes.puml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
@@ -232,7 +231,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745742050100</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Added a setup script for easy initial configuration">
+      <option name="closed" value="true" />
+      <created>1745761171490</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1745761171490</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -256,6 +263,7 @@
     <MESSAGE value="some fixes;&#10;centralizing json conversion to MQTTManager" />
     <MESSAGE value="some fixes;&#10;creating plantuml diagram" />
     <MESSAGE value="Finalizing UML" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finalizing UML" />
+    <MESSAGE value="Added a setup script for easy initial configuration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a setup script for easy initial configuration" />
   </component>
 </project>

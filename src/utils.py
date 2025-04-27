@@ -5,13 +5,13 @@ class AbstractConfigurable(ABC):
     ABSTRACT: Class for providing a key-value configuration environment
     """
 
-    def __init__(self, global_config: dict[str,any]):
+    def __init__(self, config: dict[str,any]) -> None:
         """
         Constructor
-        :param global_config: the global configuration to filter
+        :param config: the config section
         """
         # Filter the config for the own section and pack it
-        self._config = self.mod_config(global_config.get(self.section(),{}))
+        self._config = self.mod_config(config)
 
     @classmethod
     def section(cls) -> str:
