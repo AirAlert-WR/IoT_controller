@@ -55,4 +55,7 @@ class SensorSDS011(AbstractSensorDevice):
             self._data[self.SensorSDS011Keys.pm2_5] = random.uniform(5, 50)
             self._data[self.SensorSDS011Keys.pm10] = random.uniform(10, 100)
         else:
-            self._data[self.SensorSDS011Keys.pm2_5], self._data[self.SensorSDS011Keys.pm10] = self._sensor_sds011.query()
+            # From query-Result
+            query_result = self._sensor_sds011.query()
+            self._data[self.SensorSDS011Keys.pm2_5] = query_result.pm25
+            self._data[self.SensorSDS011Keys.pm10] = query_result.pm10
