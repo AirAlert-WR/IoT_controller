@@ -7,7 +7,7 @@ _platform_supported = is_raspberrypi()
 try:
     import board
     import busio
-    from adafruit_ads1x15.ads1115 import ADS1115
+    import adafruit_ads1x15.ads1115 as ADS
     from adafruit_ads1x15.analog_in import AnalogIn
 except ImportError:
     import random
@@ -28,8 +28,8 @@ class SensorMQ135(AbstractSensorDevice):
         # Setting up the sensor (if not dummy)
         if not self._is_dummy:
             i2c = busio.I2C(board.SCL, board.SDA)
-            self._ads = ADS1115(i2c)
-            self._sensor_mq135 = AnalogIn(self._ads, ADS1115.P0)
+            self._ads = ADS.ADS1115(i2c)
+            self._sensor_mq135 = AnalogIn(self._ads, ADS.P0)
 
     @property
     def id(self) -> str:
