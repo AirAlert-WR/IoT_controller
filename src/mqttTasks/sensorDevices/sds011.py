@@ -41,6 +41,7 @@ class SensorSDS011(AbstractSensorDevice):
         # Setting up the sensor (if not dummy)
         if not self._is_dummy:
             self._sensor_sds011 = SDS011QueryReader('/dev/ttyUSB0')
+            self._sensor_sds011.set_working_period(0)
 
     @property
     def id(self) -> str:
