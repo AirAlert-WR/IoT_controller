@@ -15,7 +15,7 @@ _base_requirements = [
 
 # Raspberry-Pi-specific requirements
 _rpi_requirements = [
-    "python-sds011",
+    "sds011lib",
     "adafruit-circuitpython-ads1x15",
     "adafruit-blinka",
 ]
