@@ -7,7 +7,8 @@ from src.mqttTasks.sensorDevices.base import AbstractSensorDevice
 _platform_supported = is_raspberrypi()
 # Check for import errors
 try:
-    from sds011 import SDS011
+    from sds011lib import SDS011QueryReader
+    from serial import Serial
 except ImportError:
     import random
     _platform_supported = False
@@ -39,8 +40,7 @@ class SensorSDS011(AbstractSensorDevice):
 
         # Setting up the sensor (if not dummy)
         if not self._is_dummy:
-            self._sensor_sds011 = SDS011("/dev/ttyUSB0")
-            self._sensor_sds011.set_working_period(0)
+            self._sensor_sds011 = SDS011QueryReader('/dev/ttyUSB0')
 
     @property
     def id(self) -> str:
