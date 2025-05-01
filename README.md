@@ -36,11 +36,11 @@ TODO
 
 ## Configuration
 
-The central config file (format: INI) consists of the following sections
+The central config file, saved under **config.ini**, consists of the following sections
 
 ### mqtt
 
-This section stores configuration values especially for the MQTT manager:
+This section stores configuration values for the MQTT manager:
 
 |     key     | description                               |
 |:-----------:|:------------------------------------------|
