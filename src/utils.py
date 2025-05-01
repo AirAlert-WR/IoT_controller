@@ -39,4 +39,4 @@ def is_raspberrypi() -> bool:
     """
     :return: state if platform is REALLY an arm-based raspberry pi
     """
-    return platform.machine().startswith("arm") and "raspberrypi" in platform.uname().node.lower()
+    return platform.machine().startswith("arm") and "pi" in platform.uname().node.lower()

@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Attending to complete the README file">
+    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Adding code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,7 +252,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745776533847</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Adding code">
+      <option name="closed" value="true" />
+      <created>1746106865935</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1746106865935</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -271,7 +279,6 @@
     <MESSAGE value="Add IDEA path" />
     <MESSAGE value="Updating project structure&#10;+ adding code" />
     <MESSAGE value="Implementing mqtt tls support and mqtt task helper class" />
-    <MESSAGE value="Adding code" />
     <MESSAGE value="Final project structure,&#10;Sensor Test integration" />
     <MESSAGE value="some fixes;&#10;centralizing json conversion to MQTTManager" />
     <MESSAGE value="some fixes;&#10;creating plantuml diagram" />
@@ -279,6 +286,7 @@
     <MESSAGE value="Added a setup script for easy initial configuration" />
     <MESSAGE value="Fixed configParser implementation;&#10;corrected PlantUML class diagram" />
     <MESSAGE value="Attending to complete the README file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Attending to complete the README file" />
+    <MESSAGE value="Adding code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding code" />
   </component>
 </project>
