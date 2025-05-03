@@ -3,19 +3,29 @@ Code for Raspberry Pi to use as the IoT controller for the project "AirAlert"
 
 ## Installation and initialization
 
+### Software
+
 Make sure you have the following programs installed on your device:
 
 - Python >= 3.11
 - PIP
 
-Simply execute the **following code** in your command line, after setting its path to the current folder:
+For example, under a **Debian-based Linux** platform like "*RaspberryPi OS*", these programs may be installed through the following **shell command**:
+
+    sudo apt update && sudo apt install python3 python3-pip
+
+After a successful preparation, simply execute the **following passage** inside your shell, while setting its path to the **current folder**:
 
     pip install .
 
 This will perform the complete program initialization by:
 
-- Installing all dependencies (if available on your platform)
-- Creating all configuration files with according default entries
+- installing all dependencies (if available on your platform)
+- creating all configuration files with according default entries
+
+### Hardware
+
+> !!! Attention !!!
 
 ## Starting the program
 

@@ -2,7 +2,7 @@ import os
 
 from setuptools import setup
 
-from src.utils import is_raspberrypi, AbstractConfigurable, DEF_CONFIG_FILE
+from src.utils import is_raspberrypi
 
 '''
 Setup script for installation and default configuration
@@ -24,7 +24,7 @@ _rpi_requirements = [
 is_rpi = is_raspberrypi()
 # Printing warning if not Raspberry-Pi
 if not is_rpi:
-    print("WARNING (setup.py): You are trying to setup on a non-raspberry-pi platform.\n"
+    print("WARNING (__setup.py): You are trying to setup on a non-raspberry-pi platform.\n"
           "Therefore, some dependencies will not be installed. Instead, dummy values will be used.")
 
 # Combining requirements
@@ -43,6 +43,7 @@ setup(
     ],
 )
 
+from src.utils import AbstractConfigurable, DEF_CONFIG_FILE
 # Load all configurable classes:
 from src.mqtt import MQTTManager
 
