@@ -54,6 +54,11 @@ class GlobalConfiguration:
         :param configurable: the type of the configurable object
         :return: NON-EMPTY dictionary
         """
+        section = configurable.section()
+        # Return empty dict if associated section not found
+        if section not in self._config_parser.sections():
+            return {}
+        # Else return content of found section
         return dict(self._config_parser[configurable.section()])
 
     def correct_configuration(self, list_of_configurables: list[type[AbstractConfigurable]]) -> None:

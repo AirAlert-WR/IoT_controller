@@ -4,9 +4,16 @@
 
 package utils {
     abstract class AbstractConfigurable {
-        + __init__(self, config: dict[str,any]) -> None
-        + {static} section() -> str
-        + {static} mod_config(cls, loaded_config: dict[str,any]) -> dict[str,any]
+        + __init__ (config: dict[str,any]) -> None
+        + {static} section () -> str
+        + {static} mod_config (loaded_config: dict[str,any]) -> dict[str,any]
+    }
+
+    class GlobalConfiguration {
+        + __init__ (filename: str) -> None
+        + for_configurable (configurable: type[AbstractConfigurable]) -> dict[str, any]
+        + correct_configuration (list_of_configurables: list[type[AbstractConfigurable]]) -> None
+        + save () -> None
     }
 
     class utils {
@@ -63,7 +70,7 @@ package mqttTasks {
         + __init__ ()
         + speak (text: str)
 
-        + @override process_mqtt_task()
+        + @override process_mqtt_task ()
     }
     AbstractMQTTTask <|-- TextToSpeech
 
@@ -76,7 +83,7 @@ package mqttTasks {
         + __init__ ()
         + perform_measuring ()
 
-        + @override process_mqtt_task()
+        + @override process_mqtt_task ()
     }
     AbstractMQTTTask <|-- SensorManager
 }
@@ -93,8 +100,8 @@ package mqtt {
         + disconnect () -> None
         + submit (topic: str, data: dict) -> None
 
-        @override section()
-        @override mod_config()
+        @override section ()
+        @override mod_config ()
     }
     utils.AbstractConfigurable <|-- MQTTManager
 
@@ -115,6 +122,7 @@ package main {
 
 }
 note left of main: Program entry; Uses all concrete implementations for loading objects.
+main --> "1" utils.GlobalConfiguration
 main --> "1" mqtt.MQTTManager
 
 @enduml
