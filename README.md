@@ -14,14 +14,23 @@ For example, under a **Debian-based Linux** platform like "*RaspberryPi OS*", th
 
     sudo apt update && sudo apt install python3 python3-pip
 
-After a successful preparation, simply execute the **following passage** inside your shell, while setting its path to the **current folder**:
+After a successful installation, proceed at one of the next subsections **according to your case**.
+
+#### 1. ANY platform
+
+Simply execute the **following passage** inside your shell, while setting its path to the **current folder**:
 
     pip install .
 
-This will perform the complete program initialization by:
+This will install all python-specific requirements.
 
-- installing all dependencies (if available on your platform)
-- creating all configuration files with according default entries
+#### 2. ONLY Raspberry-Pi
+
+If you want to install on a Raspberry-Pi controller (the target platform the whole application INITIALLY is created for), execute the **following line instead**:
+
+    pip install .[rpi]
+
+This will install all dependencies only available for this platform (e.g. some sensor hardware implementations).
 
 ### Hardware
 
@@ -37,7 +46,7 @@ To run this application for a single time, just execute the **following code** i
 
 If it shouldn't work, please enable execution privileges for this file, using either **chmod** or some other tool.
 
-### Execution on startup
+### Execution on system boot
 
 Normally, this software should operate since the controller operating system has started.
 Therefore, a service registration is necessary.
