@@ -5,7 +5,7 @@ import ssl
 import paho.mqtt.client as mqtt
 
 from src.mqttTasks.base import AbstractMQTTTask
-from src.utils import AbstractConfigurable
+from src.utils.configuration import AbstractConfigurable
 
 
 class MQTTManager(AbstractConfigurable):
@@ -24,9 +24,9 @@ class MQTTManager(AbstractConfigurable):
         SERVER_HOST     = "host"
         SERVER_PORT     = "port"
 
-        CERT_ROOT       = "ca_root"
-        CERT_MAIN       = "ca_main"
-        CERT_KEY        = "key_private"
+        CERT_PUBLIC     = "cert_public"
+        CERT_PRIVATE    = "cert_private"
+        CERT_FILE        = "cert_file"
 
 
     def __init__(self, config: dict[str,any], tasks: list[AbstractMQTTTask]) -> None:
@@ -48,9 +48,9 @@ class MQTTManager(AbstractConfigurable):
             #protocol    = mqtt.MQTTv5
         )
         self._client.tls_set(
-            ca_certs    = self._config[keys.CERT_ROOT],
-            certfile    = self._config[keys.CERT_MAIN],
-            keyfile     = self._config[keys.CERT_KEY],
+            ca_certs    = self._config[keys.CERT_PUBLIC],
+            certfile    = self._config[keys.CERT_PRIVATE],
+            keyfile     = self._config[keys.CERT_FILE],
             tls_version = ssl.PROTOCOL_TLSv1_2
         )
         self._client.tls_insecure_set(False)
@@ -205,9 +205,9 @@ class MQTTManager(AbstractConfigurable):
             keys.USER_NAME      : loaded_config.get(keys.USER_NAME,     ""),
             keys.USER_PASSWORD  : loaded_config.get(keys.USER_PASSWORD, ""),
             keys.USER_ID        : loaded_config.get(keys.USER_ID,       ""),
-            keys.CERT_ROOT      : loaded_config.get(keys.CERT_ROOT,     "certs/mqtt.ca"),
-            keys.CERT_MAIN      : loaded_config.get(keys.CERT_MAIN,     "certs/mqtt.crt"),
-            keys.CERT_KEY       : loaded_config.get(keys.CERT_KEY,      "certs/mqtt.key"),
+            keys.CERT_PUBLIC    : loaded_config.get(keys.CERT_PUBLIC,   "certs/public.key"),
+            keys.CERT_PRIVATE   : loaded_config.get(keys.CERT_PRIVATE,  "certs/private.key"),
+            keys.CERT_FILE       : loaded_config.get(keys.CERT_FILE,    "certs/cert.pem"),
             keys.SERVER_HOST    : loaded_config.get(keys.SERVER_HOST,   "127.0.0.1"),
             keys.SERVER_PORT    : int(p) if (p := loaded_config.get(keys.SERVER_PORT, "3181")).isdigit() else 3181
         }

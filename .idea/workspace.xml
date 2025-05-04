@@ -4,20 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Fixed bug in the configuration class">
-      <change afterPath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/ad_helper.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/configuration.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/detplatform.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/setup.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mqttTasks/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqttTasks/base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/mq135.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/mq135.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/sds011.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/sds011.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mqtt.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqtt.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -351,7 +340,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746300383982</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Fixed dependency fetching (in a &quot;pythonic&quot; way); better solution for determining the current platform; moved the analog-digital-reader logic to a separate file for providing a singleton solution for docking on; updated the PlantUML diagram">
+      <option name="closed" value="true" />
+      <created>1746368962319</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1746368962319</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -381,6 +378,8 @@
     <MESSAGE value="Migrating from setup.py to modern setup.cfg" />
     <MESSAGE value="Finally deleting &quot;setup.py&quot;; adding a configuration class to &quot;src/utils.py&quot; for easier access" />
     <MESSAGE value="Fixed bug in the configuration class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug in the configuration class" />
+    <MESSAGE value="Fixed dependency fetching (in a &quot;pythonic&quot; way); better solution for determining the current platform; moved the analog-digital-reader logic to a separate file for providing a singleton solution for docking on; updated the PlantUML diagram" />
+    <MESSAGE value="Fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixes" />
   </component>
 </project>
