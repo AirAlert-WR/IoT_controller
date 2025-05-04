@@ -29,15 +29,14 @@ class AbstractConfigurable(ABC):
         """
         pass
 
-DEF_CONFIG_FILE = "config.ini"
-"""
-The default path for the program's config file
-"""
 
 from configparser import ConfigParser
 class GlobalConfiguration:
+    """
+    Class for reading and writing a whole persistent configuration file
+    """
 
-    def __init__(self, filename: str = DEF_CONFIG_FILE) -> None:
+    def __init__(self, filename: str = "config.ini") -> None:
         """
         Custom constructor
         :param filename: path to the configuration file
@@ -80,10 +79,3 @@ class GlobalConfiguration:
         with open(self._filename, 'w', encoding="utf-8") as config_file:
             self._config_parser.write(config_file)  # TODO fix warning
 
-
-import platform
-def is_raspberrypi() -> bool:
-    """
-    :return: state if platform is REALLY an arm-based raspberry pi
-    """
-    return platform.machine().startswith("arm") and "pi" in platform.uname().node.lower()

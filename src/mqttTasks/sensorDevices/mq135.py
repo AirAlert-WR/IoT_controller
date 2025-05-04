@@ -1,18 +1,6 @@
-from src.utils import is_raspberrypi
+from src.mqttTasks.sensorDevices.ad_helper import ADCSingleton, ADCInput
+
 from src.mqttTasks.sensorDevices.base import AbstractSensorDevice
-
-# Restrict for supported platform
-_platform_supported = is_raspberrypi()
-# Check for import errors
-try:
-    import board
-    import busio
-    import adafruit_ads1x15.ads1115 as ads
-    from adafruit_ads1x15.analog_in import AnalogIn
-except ImportError:
-    import random
-    _platform_supported = False
-
 class SensorMQ135(AbstractSensorDevice):
     """
     Class with the MQ135 sensor implementation
@@ -22,14 +10,19 @@ class SensorMQ135(AbstractSensorDevice):
 
         # Calling the constructor of the mother class (including the restriction)
         super().__init__(
-            is_dummy    = is_dummy | (not _platform_supported)
+            is_dummy    = is_dummy
         )
 
-        # Setting up the sensor (if not dummy)
-        if not self._is_dummy:
-            i2c = busio.I2C(board.SCL, board.SDA)
-            self._ads = ads.ADS1115(i2c)
-            self._sensor_mq135 = AnalogIn(self._ads, ads.P0)
+        # Trying to load through the analog input
+        inp: ADCInput = ADCSingleton.get_for_port(0)
+        # Setting dummy mode (if not successful)
+        if inp is None:
+            print(f"WARNING (SensorMQ135): Input not loaded; switching to dummy configuration.")
+            self._is_dummy = True
+            return
+
+        # Else: saving as attribute
+        self._sensor_mq135 = inp
 
     @property
     def id(self) -> str:
@@ -38,6 +31,7 @@ class SensorMQ135(AbstractSensorDevice):
     def measure(self) -> None:
         # Setting the data space
         if self._is_dummy:
+            import random
             # Random values, if dummy
             self._data = random.uniform(100,300)
         else:

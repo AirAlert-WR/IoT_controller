@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-#from src.mqtt import MQTTManager
 
 class AbstractMQTTTask(ABC):
     """

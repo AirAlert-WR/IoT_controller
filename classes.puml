@@ -10,15 +10,25 @@ package utils {
     }
 
     class GlobalConfiguration {
+        # filename: str
+
         + __init__ (filename: str) -> None
         + for_configurable (configurable: type[AbstractConfigurable]) -> dict[str, any]
         + correct_configuration (list_of_configurables: list[type[AbstractConfigurable]]) -> None
         + save () -> None
     }
 
-    class utils {
-        + {static} is_raspberry_pi ()
+    enum EnumPlatform {
+        UNKNOWN = 0
+        DESKTOP = 1
+        RASPBERRY_PI = 2
     }
+
+    class det_platform {
+        + {static} get_system_info () -> dict[str,any]
+        + {static} classify_host () -> EnumPlatform
+    }
+    det_platform - EnumPlatform: using values >
 }
 
 package sensorDevices {
@@ -31,15 +41,6 @@ package sensorDevices {
         + {abstract} measure () -> None
     }
 
-    class SensorMQ135 {
-        @override id
-
-        @override __init__ ()
-        @override measure ()
-    }
-    AbstractSensorDevice <|-- SensorMQ135
-    SensorMQ135 - utils.utils: using methods >
-
     class SensorSDS011 {
         @override id
 
@@ -47,13 +48,39 @@ package sensorDevices {
         @override measure ()
     }
     AbstractSensorDevice <|-- SensorSDS011
-    SensorSDS011 - utils.utils: using methods >
+    SensorSDS011 - utils.det_platform: using methods >
 
     enum SensorSDS011Keys {
         pm2_5 = "pm2.5"
         pm10 = "pm10"
     }
     SensorSDS011 - SensorSDS011Keys: using as constants >
+
+    package ad_helper {
+        class ADCInput {
+            + __init__ (ain) -> None
+
+            + @property[r] voltage -> float
+        }
+
+        class ADCSingleton {
+            # {static} channels: dict[int,ADCInput]
+
+            # {static} _create_adc (gain: int) -> None
+            + {static} get_for_port(port: int) -> ADCInput | None
+        }
+        ADCSingleton -> ADCInput: creating and providing
+    }
+    ad_helper - utils.det_platform: using methods >
+
+    class SensorMQ135 {
+        @override id
+
+        @override __init__ ()
+        @override measure ()
+    }
+    AbstractSensorDevice <|-- SensorMQ135
+    SensorMQ135 - ad_helper: using methods >
 }
 
 package mqttTasks {

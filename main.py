@@ -1,4 +1,4 @@
-from src.utils import AbstractConfigurable, GlobalConfiguration
+from src.utils.configuration import AbstractConfigurable, GlobalConfiguration
 
 from src.mqtt import MQTTManager
 from src.mqttTasks.base import AbstractMQTTTask
