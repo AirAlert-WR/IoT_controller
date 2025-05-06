@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Fixes">
+    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Fixes + Changed keys in config">
+      <change afterPath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/scd41.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mqtt.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqtt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes.puml" beforeDir="false" afterPath="$PROJECT_DIR$/classes.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/setup.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/ad_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/old/ad_helper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/mq135.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/old/mq135.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_sensors.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_sensors.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +67,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\danil\PycharmProjects\AirAlert_IoT_Controller\src\mqttTasks\sensorDevices\old" />
       <recent name="C:\Users\danil\PycharmProjects\AirAlert_IoT_Controller\test" />
       <recent name="C:\Users\danil\PycharmProjects\AirAlert_IoT_Controller\src" />
       <recent name="C:\Users\danil\PycharmProjects\AirAlert_IoT_Controller\src\mqtttasks" />
@@ -348,7 +356,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746368962319</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Fixes + Changed keys in config">
+      <option name="closed" value="true" />
+      <created>1746377460694</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1746377460694</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -380,6 +396,7 @@
     <MESSAGE value="Fixed bug in the configuration class" />
     <MESSAGE value="Fixed dependency fetching (in a &quot;pythonic&quot; way); better solution for determining the current platform; moved the analog-digital-reader logic to a separate file for providing a singleton solution for docking on; updated the PlantUML diagram" />
     <MESSAGE value="Fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixes" />
+    <MESSAGE value="Fixes + Changed keys in config" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixes + Changed keys in config" />
   </component>
 </project>

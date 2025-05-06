@@ -1,7 +1,7 @@
 import unittest
 from time import sleep
 
-from src.mqttTasks.sensorDevices.mq135 import SensorMQ135
+from src.mqttTasks.sensorDevices.old.mq135 import SensorMQ135
 from src.mqttTasks.sensorDevices.sds011 import SensorSDS011
 
 

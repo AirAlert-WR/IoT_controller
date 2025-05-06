@@ -5,7 +5,7 @@ from src.mqttTasks.base import AbstractMQTTTask
 from src.mqttTasks.texttospeech import TextToSpeech
 from src.mqttTasks.sensors import SensorManager
 from src.mqttTasks.sensorDevices.base import AbstractSensorDevice
-from src.mqttTasks.sensorDevices.mq135 import SensorMQ135
+from src.mqttTasks.sensorDevices.old.mq135 import SensorMQ135
 from src.mqttTasks.sensorDevices.sds011 import SensorSDS011
 
 if __name__ == "__main__":

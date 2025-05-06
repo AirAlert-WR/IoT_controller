@@ -1,4 +1,4 @@
-from src.mqttTasks.sensorDevices.ad_helper import ADCSingleton, ADCInput
+from src.mqttTasks.sensorDevices.old.ad_helper import ADCSingleton, ADCInput
 
 from src.mqttTasks.sensorDevices.base import AbstractSensorDevice
 class SensorMQ135(AbstractSensorDevice):

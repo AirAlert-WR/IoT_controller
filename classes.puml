@@ -56,6 +56,22 @@ package sensorDevices {
     }
     SensorSDS011 - SensorSDS011Keys: using as constants >
 
+    class SensorSCD41 {
+        @override id
+
+        @override __init__ ()
+        @override measure ()
+    }
+    AbstractSensorDevice <|-- SensorSCD41
+    SensorSCD41 - utils.det_platform: using methods >
+
+    enum SensorSCD41Keys {
+        temperature = "temperature"
+        co2 = "co2"
+        humidity = "humidity"
+    }
+    SensorSCD41 - SensorSCD41Keys: using as constants >
+
     package ad_helper {
         class ADCInput {
             + __init__ (ain) -> None
@@ -72,6 +88,7 @@ package sensorDevices {
         ADCSingleton -> ADCInput: creating and providing
     }
     ad_helper - utils.det_platform: using methods >
+    note top of ad_helper: WARNING: DEPRECATED
 
     class SensorMQ135 {
         @override id
@@ -81,6 +98,7 @@ package sensorDevices {
     }
     AbstractSensorDevice <|-- SensorMQ135
     SensorMQ135 - ad_helper: using methods >
+    note top of SensorMQ135: WARNING: DEPRECATED
 }
 
 package mqttTasks {
