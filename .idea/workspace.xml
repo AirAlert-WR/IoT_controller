@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Fixes + Changed keys in config">
-      <change afterPath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/scd41.py" afterDir="false" />
+    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Migrating to the SCD41-Sensor while dumping the analog-input-based alternatives">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes.puml" beforeDir="false" afterPath="$PROJECT_DIR$/classes.puml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/setup.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/ad_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/old/ad_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/mq135.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqttTasks/sensorDevices/old/mq135.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test_sensors.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_sensors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mqtt.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqtt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mqttTasks/sensors.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqttTasks/sensors.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,19 +47,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultPlantUmlFileTemplate": "UML Class",
-    "Python.Test_Sensors.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "settings.editor.selected.configurable": "Errors"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultPlantUmlFileTemplate&quot;: &quot;UML Class&quot;,
+    &quot;Python.Test_Sensors.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\danil\PycharmProjects\AirAlert_IoT_Controller\src\mqttTasks\sensorDevices\old" />
@@ -364,7 +359,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746377460694</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Migrating to the SCD41-Sensor while dumping the analog-input-based alternatives">
+      <option name="closed" value="true" />
+      <created>1746531935164</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1746531935164</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -397,6 +400,7 @@
     <MESSAGE value="Fixed dependency fetching (in a &quot;pythonic&quot; way); better solution for determining the current platform; moved the analog-digital-reader logic to a separate file for providing a singleton solution for docking on; updated the PlantUML diagram" />
     <MESSAGE value="Fixes" />
     <MESSAGE value="Fixes + Changed keys in config" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixes + Changed keys in config" />
+    <MESSAGE value="Migrating to the SCD41-Sensor while dumping the analog-input-based alternatives" />
+    <option name="LAST_COMMIT_MESSAGE" value="Migrating to the SCD41-Sensor while dumping the analog-input-based alternatives" />
   </component>
 </project>

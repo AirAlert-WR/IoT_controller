@@ -1,6 +1,7 @@
+import logging
+
 from src.mqttTasks.base import AbstractMQTTTask
 from src.mqttTasks.sensorDevices.base import AbstractSensorDevice
-import json
 
 class SensorManager(AbstractMQTTTask):
     """
@@ -40,16 +41,18 @@ class SensorManager(AbstractMQTTTask):
         return "sensor"
 
     def process_mqtt_task(self, data: dict) -> None:
-        ## Attention: Provided data not important!!!
+
+        ## Attention: Provided data should look like {action: measure}
+        if not (data.get('action') == 'measure'):
+            logging.warning(f"WARN (SensorManager): Wrong task. Please input a dict like 'action: measure'!!!")
+            return
 
         # Perform measuring routine
         self.perform_measuring()
 
-        # Collecting and converting the data to json
-        data_json = json.dumps(self.data)
         # Calling the publish Method of the associated mqtt manager
         if self._manager is not None:
             self._manager.submit(
-                topic       = self.topic,
-                data_json   = data_json
+                topic   = self.topic,
+                data    = self.data
             )
