@@ -18,17 +18,22 @@ class MQTTManager(AbstractConfigurable):
         """
         Enum with keys for reading the configuration
         """
-        CLIENT_ID       = "client_id"
+        USER_NAME       = "username"
+        USER_PASSWORD   = "password"
 
-        SERVER_HOST     = "server_host"
-        SERVER_PORT     = "server_port"
+        CERT_ROOTCA     = "path_RootCA"
+        CERT_DEVCERT    = "path_Certificate"
+        CERT_PRIVKEY    = "path_PrivateKey"
 
-        CERT_PUBLIC     = "cert_public_path"
-        CERT_PRIVATE    = "cert_private_path"
-        ROOT_CA         = "ca_root_path"
+        USE_TLS         = "use_tls"
+
+        SERVER_HOST     = "host"
+        SERVER_PORT     = "port"
+
+        CLIENT_ID       = "id"
 
 
-    def __init__(self, config: dict[str,any], tasks: list[AbstractMQTTTask], with_tls: bool = False) -> None:
+    def __init__(self, config: dict[str,any], tasks: list[AbstractMQTTTask]) -> None:
         """
         Custom constructor for the class
 
@@ -42,7 +47,7 @@ class MQTTManager(AbstractConfigurable):
 
         # Saving some data to protected attributes
         self._client_id = self._config[keys.CLIENT_ID]
-        self._task_dictionary = {f"{self._client_id}/{task.topic}": task for task in tasks} # Attention: special mapping
+        self._task_dictionary = {task.topic: task for task in tasks}
         self._connect_host = self._config[keys.SERVER_HOST]
         self._connect_port = self._config[keys.SERVER_PORT]
 
@@ -50,15 +55,27 @@ class MQTTManager(AbstractConfigurable):
         self._client = mqtt.Client(
             client_id   = self._client_id,
         )
-        if with_tls:    # Optionally deactivate tls if not necessary
+
+        # Setting tls connection
+        if config[keys.USE_TLS]==str(True):    # Optionally deactivate tls if not necessary
             self._client.tls_set(
-                ca_certs    = self._config[keys.CERT_PUBLIC],
-                certfile    = self._config[keys.CERT_PRIVATE],
-                keyfile     = self._config[keys.ROOT_CA],
+                ca_certs    = self._config[keys.CERT_ROOTCA],
+                certfile    = self._config[keys.CERT_DEVCERT],
+                keyfile     = self._config[keys.CERT_PRIVKEY],
                 cert_reqs   = ssl.CERT_REQUIRED,
                 tls_version = ssl.PROTOCOL_TLSv1_2,
                 ciphers     = None
             )
+            self._client.tls_insecure_set(False)
+
+        # Setting username and password
+        self._client.username_pw_set(
+            username    = self._config[keys.USER_NAME],
+            password    = self._config[keys.USER_PASSWORD],
+        )
+
+        # Setting constant for one main subscribed task
+        self.TOPIC_TASK = f"{self._client_id}/task"
 
         # Setting internal methods for mqtt client
         self._set_methods_for_internal_client()
@@ -77,11 +94,13 @@ class MQTTManager(AbstractConfigurable):
                 # print success
                 logging.info("HINT (MQTTManager): Connection established")
 
-                # Subscribe to all topics and add manager parameter as parent
+                # Subscribe to the task topic
+                client.subscribe(
+                    topic   = self.TOPIC_TASK
+                )
+
+                # Setting this Manager instance for all tasks
                 for topic_name in self._task_dictionary.keys():
-                    client.subscribe(
-                        topic   = topic_name
-                    )
                     self._task_dictionary[topic_name].manager = self
 
             else:
@@ -114,8 +133,12 @@ class MQTTManager(AbstractConfigurable):
                 # Convert json to dictionary
                 data_dict: dict = json.loads(payload_raw)
 
+                # Getting task name and data
+                task_name = data_dict["name"]
+                task_data = data_dict.get("data",{})
+
                 # Execute task associated to topic
-                self._task_dictionary[topic].process_mqtt_task(data_dict)
+                self._task_dictionary[task_name].process_mqtt_task(task_data)
             except json.JSONDecodeError:
                 # Log on exception
                 logging.error(f"ERROR (MQTTManager): Failed to decode json.")
@@ -161,15 +184,16 @@ class MQTTManager(AbstractConfigurable):
         :param topic: topic identifier to submit on
         :param data: data dictionary to submit
         """
-        # Absolute topic
-        full_topic = f"{self._client_id}/{topic}"
         # Checking for topic validity
-        if full_topic not in self._task_dictionary.keys():
+        if topic not in self._task_dictionary.keys():
             logging.error(f"ERROR (MQTTManager): Topic {topic} not registered")
             return
 
         # Converting data to json
         data_json = json.dumps(data)
+
+        # Creating the full (unique) topic identifier
+        full_topic = f"{self._client_id}/{topic}"
 
         # Publishing the content
         self._client.publish(
@@ -191,10 +215,13 @@ class MQTTManager(AbstractConfigurable):
 
         keys = cls._MQTTConfigKeys
         return {
-            keys.CLIENT_ID       : loaded_config.get(keys.CLIENT_ID,    ""),
-            keys.CERT_PUBLIC    : loaded_config.get(keys.CERT_PUBLIC,   "certs/public.pem"),
-            keys.CERT_PRIVATE   : loaded_config.get(keys.CERT_PRIVATE,  "certs/private.key"),
-            keys.ROOT_CA        : loaded_config.get(keys.ROOT_CA,       "certs/root_ca.pem"),
+            keys.USER_NAME      : loaded_config.get(keys.USER_NAME,     ""),
+            keys.USER_PASSWORD  : loaded_config.get(keys.USER_PASSWORD, ""),
+            keys.CERT_ROOTCA    : loaded_config.get(keys.CERT_ROOTCA,   "certs/rootCA.pem"),
+            keys.CERT_DEVCERT   : loaded_config.get(keys.CERT_DEVCERT,  "certs/certificate.pem.crt"),
+            keys.CERT_PRIVKEY   : loaded_config.get(keys.CERT_PRIVKEY,  "certs/private.pem.key"),
+            keys.USE_TLS        : bool(v) if (v := loaded_config.get(keys.USE_TLS, "false").lower()) in ("1", "true", "yes", "on") else False,
             keys.SERVER_HOST    : loaded_config.get(keys.SERVER_HOST,   "127.0.0.1"),
-            keys.SERVER_PORT    : int(p) if (p := loaded_config.get(keys.SERVER_PORT, "3181")).isdigit() else 3181
+            keys.SERVER_PORT    : int(p) if (p := loaded_config.get(keys.SERVER_PORT, "3181")).isdigit() else 3181,
+            keys.CLIENT_ID: loaded_config.get(keys.CLIENT_ID, ""),
         }

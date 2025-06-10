@@ -31,7 +31,7 @@ class SensorSDS011(AbstractSensorDevice):
         """
         Enum with keys for setting the sensor data dictionary
         """
-        pm2_5 = "pm2.5"
+        pm2_5 = "pm2_5"
         pm10 = "pm10"
 
     def __init__(self,is_dummy: bool = False):
@@ -62,8 +62,8 @@ class SensorSDS011(AbstractSensorDevice):
         if self._is_dummy:
             import random
             # Random values, if dummy
-            self._data[self.SensorSDS011Keys.pm2_5] = random.uniform(5, 50)
-            self._data[self.SensorSDS011Keys.pm10] = random.uniform(10, 100)
+            self._data[self.SensorSDS011Keys.pm2_5] = random.uniform(5,30)  # µg/m^3
+            self._data[self.SensorSDS011Keys.pm10] = random.uniform(10,50)  # µg/m^3
         else:
             # From query-Result
             query_result: QueryResponse = self._sensor_sds011.query()

@@ -74,9 +74,9 @@ class SensorSCD41(AbstractSensorDevice):
         if self._is_dummy:
             import random
             # Random values, if dummy
-            self._data[self.SensorSCD41Keys.co2] = random.uniform(5, 50)
-            self._data[self.SensorSCD41Keys.temperature] = random.uniform(10, 100)
-            self._data[self.SensorSCD41Keys.humidity] = random.uniform(5, 50)
+            self._data[self.SensorSCD41Keys.co2] = random.uniform(500, 2000)        # ppm
+            self._data[self.SensorSCD41Keys.temperature] = random.uniform(10, 35)   # °C
+            self._data[self.SensorSCD41Keys.humidity] = random.uniform(20, 90)      # %RH
         else:
             # Get measurement and sleep for 5s
             self._sensor_scd41.perform_single_measurement()

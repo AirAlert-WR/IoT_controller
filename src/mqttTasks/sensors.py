@@ -31,7 +31,10 @@ class SensorManager(AbstractMQTTTask):
         # Place every measuring result into the dictionary
         for sensor in self._sensors:
             sensor.measure()
-            self._data[sensor.id] = sensor.data
+
+            #self._data[sensor.id] = sensor.data
+            # Save FLATTENED data inside the dict
+            self._data.update(sensor.data)
 
     '''
     Methods for MQTTTaskClass
@@ -42,16 +45,14 @@ class SensorManager(AbstractMQTTTask):
 
     def process_mqtt_task(self, data: dict) -> None:
 
-        ## Attention: Provided data should look like {action: measure}
-        if not (data.get('action') == 'measure'):
-            logging.warning(f"WARN (SensorManager): Wrong task. Please input a dict like 'action: measure'!!!")
-            return
+        ## Attention: data parameter ignored
 
         # Perform measuring routine
         self.perform_measuring()
 
         # Calling the publish Method of the associated mqtt manager
         if self._manager is not None:
+
             self._manager.submit(
                 topic   = self.topic,
                 data    = self.data
