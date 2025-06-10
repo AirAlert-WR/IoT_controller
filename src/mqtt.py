@@ -102,6 +102,12 @@ class MQTTManager(AbstractConfigurable):
                 # Setting this Manager instance for all tasks
                 for topic_name in self._task_dictionary.keys():
                     self._task_dictionary[topic_name].manager = self
+                    # Initial task:
+                    logging.info("HINT (MQTTManager): Executing initial commands")
+                    self._task_dictionary[topic_name].process_mqtt_task({})
+
+
+
 
             else:
                 # else print error
