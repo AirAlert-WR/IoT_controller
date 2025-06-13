@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Other fixes. Final source code for release">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Removed old sensors" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -381,7 +379,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749579760758</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Removed old sensors">
+      <option name="closed" value="true" />
+      <created>1749813711391</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1749813711391</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -417,6 +423,7 @@
     <MESSAGE value="Migrating to the SCD41-Sensor while dumping the analog-input-based alternatives" />
     <MESSAGE value="- Fixed MQTT issues / Changed subscription-submit system&#10;- Successful testing&#10;- Changed dummy values for more authenticity" />
     <MESSAGE value="Other fixes. Final source code for release" />
-    <option name="LAST_COMMIT_MESSAGE" value="Other fixes. Final source code for release" />
+    <MESSAGE value="Removed old sensors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed old sensors" />
   </component>
 </project>

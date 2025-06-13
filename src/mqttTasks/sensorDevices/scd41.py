@@ -18,11 +18,11 @@ except ImportError:
     class SCD41Reader:
         def __init__(self,i2c: I2C): pass
         def stop_periodic_measurement(self): pass
-        def perform_single_measurement(self): pass
+        def measure_single_shot(self): pass
         @property
         def data_ready(self): return True
         @property
-        def CO2(self): return 0.0
+        def CO2(self): return 0
         @property
         def temperature(self): return 0.0
         @property
@@ -79,7 +79,7 @@ class SensorSCD41(AbstractSensorDevice):
             self._data[self.SensorSCD41Keys.humidity] = random.uniform(20, 90)      # %RH
         else:
             # Get measurement and sleep for 5s
-            self._sensor_scd41.perform_single_measurement()
+            self._sensor_scd41.measure_single_shot()
             while not self._sensor_scd41.data_ready:
                 time.sleep(0.5)
             # Set from reader properties
