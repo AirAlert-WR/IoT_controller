@@ -1,4 +1,4 @@
-import os
+import getpass
 import platform
 from enum import Enum
 
@@ -13,7 +13,7 @@ def get_system_info() -> dict[str,any]:
         "cpu_brand": cpuinfo.get_cpu_info().get("brand_raw", ""),
         "architecture": platform.architecture()[0], # e.g., '32bit' or '64bit'
         "distro": distro.name(pretty=True),
-        "username": os.getlogin()
+        "username": getpass.getuser()
     }
 
 class EnumPlatform(Enum):

@@ -1,0 +1,26 @@
+git clone / git update
+pip install .[rpi] --break-system-packages
+wget https://airalertcconfigbucket.s3.amazonaws.com/devices/controller-1749820188344.zip -O temp.zip && unzip temp.zip && rm temp.zip
+
+sudo nano /etc/systemd/system/iot_controller.service
+
+[Unit]
+Description=AirAlert IoT Controller software
+After=network.target
+
+[Service]
+ExecStart=python /home/admin/IoT_controller/main.py
+WorkingDirectory=/home/admin/IoT_controller
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=admin
+
+[Install]
+WantedBy=multi-user.target
+
+chmod +x /home/admin/IoT_controller/main.py
+sudo systemctl enable iot_controller.service
+sudo systemctl start iot_controller.service
+
+sudo systemctl status iot_controller.service

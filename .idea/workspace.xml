@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Removed old sensors" />
+    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Fixes">
+      <change afterPath="$PROJECT_DIR$/instructions rpi" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/det_platform.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/det_platform.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -387,7 +391,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749813711391</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Fixes">
+      <option name="closed" value="true" />
+      <created>1749818043269</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1749818043270</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -418,12 +430,12 @@
     <MESSAGE value="Finally deleting &quot;setup.py&quot;; adding a configuration class to &quot;src/utils.py&quot; for easier access" />
     <MESSAGE value="Fixed bug in the configuration class" />
     <MESSAGE value="Fixed dependency fetching (in a &quot;pythonic&quot; way); better solution for determining the current platform; moved the analog-digital-reader logic to a separate file for providing a singleton solution for docking on; updated the PlantUML diagram" />
-    <MESSAGE value="Fixes" />
     <MESSAGE value="Fixes + Changed keys in config" />
     <MESSAGE value="Migrating to the SCD41-Sensor while dumping the analog-input-based alternatives" />
     <MESSAGE value="- Fixed MQTT issues / Changed subscription-submit system&#10;- Successful testing&#10;- Changed dummy values for more authenticity" />
     <MESSAGE value="Other fixes. Final source code for release" />
     <MESSAGE value="Removed old sensors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed old sensors" />
+    <MESSAGE value="Fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixes" />
   </component>
 </project>
