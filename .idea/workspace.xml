@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="- Fixed MQTT issues / Changed subscription-submit system&#10;- Successful testing&#10;- Changed dummy values for more authenticity">
+    <list default="true" id="70d61f82-9cb0-4f6a-a666-f7904d32b7f6" name="Changes" comment="Other fixes. Final source code for release">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mqtt.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mqtt.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,12 +30,12 @@
     &quot;assignee&quot;: &quot;renderedideas-lab&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/AirAlert-WR/IoT_controller.git",
-    "accountId": "e16e6850-eb84-42e5-b65a-e6af2e3f57a1"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AirAlert-WR/IoT_controller.git&quot;,
+    &quot;accountId&quot;: &quot;e16e6850-eb84-42e5-b65a-e6af2e3f57a1&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -66,7 +65,7 @@
       <recent name="C:\Users\danil\PycharmProjects\AirAlert_IoT_Controller\src\mqtttasks" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Test_Sensors">
+  <component name="RunManager" selected="Python.main">
     <configuration name="Test_Sensors" type="PythonConfigurationType" factoryName="Python">
       <module name="AirAlert_IoT_Controller" />
       <option name="ENV_FILES" value="" />
@@ -121,7 +120,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-dfff61a61320-9cdd278e9d02-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.25410.159" />
+        <option value="bundled-python-sdk-53e2683a6804-9cdd278e9d02-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.26094.141" />
       </set>
     </attachedChunks>
   </component>
@@ -374,7 +373,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749553129087</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Other fixes. Final source code for release">
+      <option name="closed" value="true" />
+      <created>1749579760758</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1749579760758</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -409,6 +416,7 @@
     <MESSAGE value="Fixes + Changed keys in config" />
     <MESSAGE value="Migrating to the SCD41-Sensor while dumping the analog-input-based alternatives" />
     <MESSAGE value="- Fixed MQTT issues / Changed subscription-submit system&#10;- Successful testing&#10;- Changed dummy values for more authenticity" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Fixed MQTT issues / Changed subscription-submit system&#10;- Successful testing&#10;- Changed dummy values for more authenticity" />
+    <MESSAGE value="Other fixes. Final source code for release" />
+    <option name="LAST_COMMIT_MESSAGE" value="Other fixes. Final source code for release" />
   </component>
 </project>
