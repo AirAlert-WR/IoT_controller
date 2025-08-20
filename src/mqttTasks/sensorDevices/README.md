@@ -41,7 +41,7 @@ This sensor is used for gathering information about the air quality, such as:
 - the environmental **temperature**
 - the **relative humidity**
 
-The device operates using TODO
+The device operates using a combination of infrared particle heating (while the resulting ultrasound pulses are recorded), hygroscopic ione measuring (for humidity) and natural vibrations of the atomic lattice (for temperature)
 
 All raw data is (currently) transferred by the Raspberry Pi's ONLY **I2C input** located at the gpio pins.
 The sensor itself is **calibrated from factory**.
