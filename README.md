@@ -35,6 +35,9 @@ This will install all dependencies only available for this platform (e.g. some s
 ### Hardware
 
 > !!! Attention !!!
+> The Controller application **generally runs on every platform** where Python is installed.
+> However, the full code is only executed on the Raspberry Pi, as all dependencies can only be installed there.
+> Nevertheless, a dummy-mode application will run on any different computer architecture, so connection privileges, mqtt bridges and much more can be tested independently.
 
 ## Starting the program
 
@@ -61,13 +64,14 @@ The central config file, saved under **config.ini**, consists of the following s
 
 This section stores configuration values for the MQTT manager:
 
-|     key     | description                               |
-|:-----------:|:------------------------------------------|
-|  username   | the username of the client account        |
-|  password   | the password of the client account        |
-|     id      | the id of the client account              |
-|   ca_root   | path to the root certificate file         |
-|   ca_main   | path to the main certificate file         |
-| key_private | path to the key file for the certificates |
-|    host     | the basic url to the mqtt server          |
-|    port     | the port for accessing the mqtt task      |
+|     key          | description                               |
+|:----------------:|:------------------------------------------|
+|  username        | the username of the client account        |
+|  password        | the password of the client account        |
+|     id           | the id of the controller                  |
+| path_rootca      | path to the root certificate file         |
+| path_certificate | path to the main certificate file         |
+| path_privatekey  | path to the unique key file for the client|
+| use_tls          | state wheter certificate- or login-based  |
+|    host          | the basic url to the mqtt server          |
+|    port          | the port for accessing the mqtt task      |
