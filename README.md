@@ -1,6 +1,9 @@
 # AirAlert_IoT_Controller
 Code for Raspberry Pi to use as the IoT controller for the project "AirAlert"
 
+> !!!ATTENTION!!!
+> All information about the currently implemented sensors is located iside [this](src/mqttTasks/sensorDevices) Directory
+
 ## Installation and initialization
 
 ### Software
