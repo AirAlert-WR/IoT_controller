@@ -1,7 +1,6 @@
 # Sensor information
 
 For gathering data from the surrounding environment, various types of sensors are utilized.
-Specifically to measure air quality, TODO
 
 This README provides insight into the sensors used for the *AirAlert* project, 
 providing information about their **specification** as well as the **measured data values**
@@ -10,10 +9,10 @@ providing information about their **specification** as well as the **measured da
 
 ### Information
 
-This sensor is used for getting the **amount of particulate matter** inside the air, such as **PM2.5 and PM10**.
-TODO
+This sensor is used for getting the **amount of particulate matter** inside the air, such as **PM2.5 and PM10**,
+which, at high concentration, could literally provide a "dangerous atmosphere", therefore increasing mortality due to **blockage of the bronchi** and resulting **suffocation**.
 
-The device operates using the optical ... of **particle reflection**, which is then captured by a photo diode.
+The device operates using the optical phenomenon of **particle reflection**, which is then captured by a photo diode.
 
 All raw data is transferred by the **USB2TT converter** provided inside the bought bundle.
 The sensor itself is **calibrated from factory**.
@@ -42,11 +41,9 @@ This sensor is used for gathering information about the air quality, such as:
 - the environmental **temperature**
 - the **relative humidity**
 
-TODO
-
 The device operates using TODO
 
-All raw data is transferred by the Raspberry Pi's ONLY **I2C input** located at the gpio pins.
+All raw data is (currently) transferred by the Raspberry Pi's ONLY **I2C input** located at the gpio pins.
 The sensor itself is **calibrated from factory**.
 
 > **Attention**: the implementation of an **I2C multiplexer** for connecting multiple sensors to the Raspberry Pi 
