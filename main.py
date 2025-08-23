@@ -4,7 +4,6 @@ from src.utils.configuration import AbstractConfigurable, GlobalConfiguration
 
 from src.mqtt import MQTTManager
 from src.mqttTasks.base import AbstractMQTTTask
-from src.mqttTasks.texttospeech import TextToSpeech
 from src.mqttTasks.sensors import SensorManager
 from src.mqttTasks.sensorDevices.base import AbstractSensorDevice
 from src.mqttTasks.sensorDevices.sds011 import SensorSDS011
@@ -39,8 +38,7 @@ if __name__ == "__main__":
 
     # Register MQTTTasks
     tasks: list[AbstractMQTTTask] = [
-        SensorManager(sensors),
-        TextToSpeech()
+        SensorManager(sensors)
     ]
 
     # Fetch the configuration for the mqtt manager

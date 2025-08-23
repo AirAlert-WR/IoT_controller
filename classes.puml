@@ -1,6 +1,8 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+hide empty methods
+hide empty fields
 
 package utils {
     abstract class AbstractConfigurable {
@@ -28,6 +30,7 @@ package utils {
         + {static} get_system_info () -> dict[str,any]
         + {static} classify_host () -> EnumPlatform
     }
+
     det_platform - EnumPlatform: using values >
 }
 
@@ -39,6 +42,7 @@ package sensorDevices {
         + @property[r] data: any
 
         + {abstract} measure () -> None
+        + __init__ (is_dummy: bool) -> None
     }
 
     class SensorSDS011 {
@@ -51,7 +55,7 @@ package sensorDevices {
     SensorSDS011 - utils.det_platform: using methods >
 
     enum SensorSDS011Keys {
-        pm2_5 = "pm2.5"
+        pm2_5 = "pm2_5"
         pm10 = "pm10"
     }
     SensorSDS011 - SensorSDS011Keys: using as constants >
@@ -71,34 +75,6 @@ package sensorDevices {
         humidity = "humidity"
     }
     SensorSCD41 - SensorSCD41Keys: using as constants >
-
-    package ad_helper {
-        class ADCInput {
-            + __init__ (ain) -> None
-
-            + @property[r] voltage -> float
-        }
-
-        class ADCSingleton {
-            # {static} channels: dict[int,ADCInput]
-
-            # {static} _create_adc (gain: int) -> None
-            + {static} get_for_port(port: int) -> ADCInput | None
-        }
-        ADCSingleton -> ADCInput: creating and providing
-    }
-    ad_helper - utils.det_platform: using methods >
-    note top of ad_helper: WARNING: DEPRECATED
-
-    class SensorMQ135 {
-        @override id
-
-        @override __init__ ()
-        @override measure ()
-    }
-    AbstractSensorDevice <|-- SensorMQ135
-    SensorMQ135 - ad_helper: using methods >
-    note top of SensorMQ135: WARNING: DEPRECATED
 }
 
 package mqttTasks {
@@ -109,23 +85,13 @@ package mqttTasks {
         + {abstract} process_mqtt_task (data: dict) -> None
     }
 
-    class TextToSpeech {
-        + @override topic
-
-        + __init__ ()
-        + speak (text: str)
-
-        + @override process_mqtt_task ()
-    }
-    AbstractMQTTTask <|-- TextToSpeech
-
     class SensorManager {
         # _sensors: list[AbstractSensorDevice]
         + @property[r] data: dict[str,any]
 
         + @override topic
 
-        + __init__ ()
+        + __init__ (sensors: list[AbstractSensorDevice])
         + perform_measuring ()
 
         + @override process_mqtt_task ()
@@ -138,7 +104,7 @@ package mqtt {
     class MQTTManager {
         # _task_dictionary: dict[str,AbstractMQTTTask]
 
-        + __init__ (config: dict[str,str], tasks: list[AbstractMQTTTask]) -> None
+        + __init__ (config: dict[str,any], tasks: list[AbstractMQTTTask]) -> None
         # _set_methods_for_internal_client () -> None
 
         + connect () -> None
@@ -151,13 +117,15 @@ package mqtt {
     utils.AbstractConfigurable <|-- MQTTManager
 
     enum _MQTTConfigKeys {
-        USERNAME = "username"
-        PASSWORD = "password"
-        HOST = "host"
-        PORT = "port"
-        CERT_ROOT_CA = "root_ca"
-        CERT_MAIN = "certificate"
-        CERT_KEY_PRIVATE = "private_key"
+        USER_NAME       = "username"
+        USER_PASSWORD   = "password"
+        CERT_ROOTCA     = "path_RootCA"
+        CERT_DEVCERT    = "path_Certificate"
+        CERT_PRIVKEY    = "path_PrivateKey"
+        USE_TLS         = "use_tls"
+        SERVER_HOST     = "host"
+        SERVER_PORT     = "port"
+        CLIENT_ID       = "id"
     }
     MQTTManager - _MQTTConfigKeys: using as constants >
 }
@@ -169,5 +137,15 @@ package main {
 note left of main: Program entry; Uses all concrete implementations for loading objects.
 main --> "1" utils.GlobalConfiguration
 main --> "1" mqtt.MQTTManager
+
+package test {
+    class MyTestCase {
+        + test_sensor_scd41()
+        + test_sensor_sds11()
+        + test_enum_validity()
+    }
+    note left of MyTestCase: in Module "test_sensors". Purpose: testing sensor functionalities.
+}
+note top of test: Environment for testing
 
 @enduml
