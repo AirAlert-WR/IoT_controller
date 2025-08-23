@@ -1,6 +1,9 @@
 # AirAlert_IoT_Controller
 Code for Raspberry Pi to use as the IoT controller for the project "AirAlert"
 
+> !!!ATTENTION!!!
+> All information about the currently implemented sensors is located iside [this](src/mqttTasks/sensorDevices) Directory
+
 ## Installation and initialization
 
 ### Software
@@ -32,13 +35,27 @@ If you want to install on a Raspberry-Pi controller (the target platform the who
 
 This will install all dependencies only available for this platform (e.g. some sensor hardware implementations).
 
+> !!! Attention !!!
+> use the parameter **--break-system-packages**, if necessary
+
 ### Hardware
 
 > !!! Attention !!!
+> The Controller application **generally runs on every platform** where Python is installed.
+> However, the full code is only executed on the Raspberry Pi, as all dependencies can only be installed there.
+> Nevertheless, a dummy-mode application will run on any different computer architecture, so connection privileges, mqtt bridges and much more can be tested independently.
 
 ## Starting the program
 
+The following steps will be **shown for the Linux** plattform. But on Windows, similar instructions should also work.
+
 ### Simple execution
+
+First of all, clone the repository and install the initial exception.
+
+Then, if necessary, obtain a certificate zip, usually possible while registering or having insight into controller properties on the frontend web page:
+
+    wget [ZIP-URL] -O temp.zip && unzip temp.zip && rm temp.zip
 
 To run this application for a single time, just execute the **following code** in your command line:
 
@@ -51,7 +68,38 @@ If it shouldn't work, please enable execution privileges for this file, using ei
 Normally, this software should operate since the controller operating system has started.
 Therefore, a service registration is necessary.
 
-TODO
+Execute the following code inside the command line:
+
+    sudo nano /etc/systemd/system/iot_controller.service
+
+Add these lines to the newly created text file. **Edit the ExecStart and WorkingDirectory paths, if necessary**
+
+    [Unit]
+    Description=AirAlert IoT Controller software
+    After=network.target
+
+    [Service]
+    ExecStart=python /home/admin/IoT_controller/main.py
+    WorkingDirectory=/home/admin/IoT_controller
+    StandardOutput=inherit
+    StandardError=inherit
+    Restart=always
+    User=admin
+
+    [Install]
+    WantedBy=multi-user.target
+
+Then save the file (CTRL + O) and enable the service:
+
+    chmod +x /home/admin/IoT_controller/main.py
+    sudo systemctl enable iot_controller.service
+    sudo systemctl start iot_controller.service
+
+Now, the service should not only run, but execute at every startup (exaclty after the network connection is initialized).
+For additional checks and insights into log messages and errors, use the following command:
+
+    sudo systemctl status iot_controller.service
+
 
 ## Configuration
 
@@ -61,13 +109,14 @@ The central config file, saved under **config.ini**, consists of the following s
 
 This section stores configuration values for the MQTT manager:
 
-|     key     | description                               |
-|:-----------:|:------------------------------------------|
-|  username   | the username of the client account        |
-|  password   | the password of the client account        |
-|     id      | the id of the client account              |
-|   ca_root   | path to the root certificate file         |
-|   ca_main   | path to the main certificate file         |
-| key_private | path to the key file for the certificates |
-|    host     | the basic url to the mqtt server          |
-|    port     | the port for accessing the mqtt task      |
+|     key          | description                               |
+|:----------------:|:------------------------------------------|
+|  username        | the username of the client account        |
+|  password        | the password of the client account        |
+|     id           | the id of the controller                  |
+| path_rootca      | path to the root certificate file         |
+| path_certificate | path to the main certificate file         |
+| path_privatekey  | path to the unique key file for the client|
+| use_tls          | state wheter certificate- or login-based  |
+|    host          | the basic url to the mqtt server          |
+|    port          | the port for accessing the mqtt task      |
