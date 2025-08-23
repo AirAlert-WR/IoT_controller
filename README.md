@@ -4,6 +4,15 @@ Code for Raspberry Pi to use as the IoT controller for the project "AirAlert"
 > !!!ATTENTION!!!
 > All information about the currently implemented sensors is located iside [this](src/mqttTasks/sensorDevices) Directory
 
+## Loading inside the IDE
+
+This project was created with **PyCharm Community Edition** by JetBains. 
+Just load the project and install all extensions recommended by the IDE assistant.
+
+> !!!ATTENTION!!!
+> An **initialization is needed anyway**!!!
+> Check the further steps for more information.
+
 ## Installation and initialization
 
 ### Software
