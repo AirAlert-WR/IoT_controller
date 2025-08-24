@@ -112,7 +112,11 @@ For additional checks and insights into log messages and errors, use the followi
 
 ## Configuration
 
-The central config file, saved under **config.ini**, consists of the following sections
+The central configuration file, saved under **config.ini**, consists of the sections listed below.
+
+> !!!ATTENTION!!!
+> Even if not accessible or potentially incorrectly filled, the program **start normally**, without any hesitation.
+> This is done by placing **default hard-coded values** inside erronous or missing places, while saving it after correction.
 
 ### mqtt
 
